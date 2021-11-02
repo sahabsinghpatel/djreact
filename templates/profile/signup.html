@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}SIGNUP{% endblock title %}
+
+{% block body %}
+
+<section class="page-section bg-dark" id="login-page">
+    <div class="container px-4 px-lg-5 text-center">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="login p-3">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center text-white">
+                        <h1 class="mt-0">SIGNUP</h1>
+                        <hr class="divider" />
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-12">
+                        <form id="contactForm" action="/profile/signup/" method="POST">
+                        {% csrf_token %}
+                            <input type="hidden" name="action" value="signup">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="username" type="text" placeholder="Username"
+                                    data-sb-validations="required" name="username" onkeyup='enablesignupbtn()'/>
+                                <label for="username">Username</label>
+                                <div class="invalid-feedback" data-sb-feedback="username:required">Username is requried.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="email" type="email" placeholder="Email"
+                                    data-sb-validations="required" name="email"  onkeyup='enablesignupbtn()'/>
+                                <label for="email">Email</label>
+                                <div class="invalid-feedback" data-sb-feedback="email:required">email is requried.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="password" type="password" placeholder="Password"
+                                    data-sb-validations="required,password" name="password" onkeyup='enablesignupbtn()'/>
+                                <label for="password">Password</label>
+                                <div class="invalid-feedback" data-sb-feedback="password:required">Password is requried.</div>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-xl" id="signupbtn" type="submit" disabled>SIGNUP</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

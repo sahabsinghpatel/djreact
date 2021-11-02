@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block body %}
+
+<section class="page-section bg-dark" id="login-page">
+    <div class="container px-4 px-lg-5 text-center">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="login p-3">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center text-white">
+                        <h1 class="mt-0">LOGIN</h1>
+                        <hr class="divider" />
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-12">
+                        <form id="contactForm" action="/profile/login/" method="POST">
+                        {% csrf_token %}
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="lusername" type="text" placeholder="Username"
+                                    data-sb-validations="required" name="username" onkeyup="enableloginbtn()"/>
+                                <label for="lusername">Username</label>
+                                <div class="invalid-feedback" data-sb-feedback="username:required">Username is requried.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="lpassword" type="password" placeholder="Password"
+                                    data-sb-validations="required,password" name="password" onkeyup="enableloginbtn()"/>
+                                <label for="lpassword">Password</label>
+                                <div class="invalid-feedback" data-sb-feedback="password:required">Password is requried.</div>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-xl " id="submitlogin" type="submit" disabled>Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

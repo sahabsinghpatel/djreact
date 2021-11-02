@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %}Search{% endblock title %}
+
+{% block blogactive %}active{% endblock blogactive %}
+
+{% block body %}
+
+<section class="page-section bg-dark text-white">
+    <div class="container px-4 px-lg-5">
+    {% if posts %}
+        <h1 class="mb-4 text-center">Search results for "{{query}}"</h1>
+        {% for post in posts %}
+        <div class="blog-posts">
+            <div class="post-card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-5">
+                    <img src="{{post.thumbnail.url}}" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body">
+                      <h5 class="card-title">{{post.title}}</h5>
+                      <p class="card-text">{{post.desc}}</p>
+                      <p class="card-text"><small class="text-muted">Updated {{ post.pub_date|timesince }} ago</small></p>
+                      <a href="/blog/{{post.slug}}/">Read More</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="d-flex justify-content-center my-3">
+      <div class="paginator">
+        <a href="/blog/search/?query={{query}}&page={% if posts.has_previous %}{{posts.previous_page_number}}{% endif %}" class="btn btn-primary btn-lg {% if posts.has_previous %}{% else %}disabled{% endif %}">Previous</a>       
+        <p class="h2">{{ posts.number }}</p>
+        <a href="/blog/search/?query={{query}}&page={% if posts.has_next %}{{posts.next_page_number}}{% endif %}" class="btn btn-primary btn-lg {% if posts.has_next %}{% else %}disabled{% endif %}">Next</a>
+      </div>
+    </div>
+    {% else %}
+      <h1 class="mb-4 text-center">found nothing</h1>
+      <p class="mb-4 text-center">please change your search query and search again...</p>
+      {% include "blog/search_form.html" %}
+    {% endif %}
+    </div>
+</section>
+
+{% endblock body %}

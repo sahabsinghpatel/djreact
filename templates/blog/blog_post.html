@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block blogactive %}active{% endblock blogactive %}
+
+{% block body %}
+
+<section class="page-section bg-dark text-white">
+    <div class="container px-4 px-lg-5 text-center">
+        <h1 class="mb-4">{{post.title}}</h1>
+        <p>{{post.content}}</p>
+    </div>
+    <div class="container text-white">
+        <hr>
+        <div class="comment">
+            {% if user.is_authenticated %}
+            <div class="post-comment-box">
+                <h3>Post your comment</h3>
+                <div class="bg-glass p-2 my-3">
+                    <form action="/blog/post-comment/" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="comment" id="comment-box" class="form-control" placeholder="Write Here...">
+                        <input type="hidden" name="cpost" value="{{post.sno}}">
+                        <input class="btn btn-sm btn-primary mt-2" type="submit" value="Submit">
+                    </form>
+                </div>
+            {% else %}
+            <h3>Login To Post Comment <a href="/profile/login/">Login</a>
+            {% endif %}
+            </div>
+            {% if comments %}
+            <hr>
+            <div class="container">
+                <div class="d-flex justify-content-center row">
+                        <div class="d-flex flex-column comment-section">
+                            <h3>Comments({{ comments|length }})</h3>
+                            {% for comment in comments %}
+                            <div class="bg-glass p-2 my-2" id="comments">
+                                <div class="d-flex flex-row user-info"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+                                    <div class="d-flex flex-column justify-content-start mx-3"><span class="d-block font-weight-bold name">{{comment.commenter|capfirst}}</span><span class="date">Posted {{comment.post_date|timesince}}</span></div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">{{comment.comment}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
